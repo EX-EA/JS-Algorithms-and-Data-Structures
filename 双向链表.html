@@ -188,6 +188,8 @@
           }
         }
 
+        this.length -= 1
+
         return current.data
       }
 
@@ -195,6 +197,24 @@
       DoubleLinkedList.prototype.remove = function (data) {
         let index = this.indexOf(data)
         return this.removeAt(index)
+      }
+
+      // ISEMPTY
+      DoubleLinkedList.prototype.isEmpty = function () {
+        return this.length === 0
+      }
+
+      // SIZE
+      DoubleLinkedList.prototype.size = function () {
+        return this.length
+      }
+
+      DoubleLinkedList.prototype.getFirst = function () {
+        return this.head.data
+      }
+
+      DoubleLinkedList.prototype.getLast = function () {
+        return this.tail.data
       }
     }
 
