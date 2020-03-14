@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Set() {
+
+      this.set = {}
+
+      // Set.prototype[Symbol.iterator] = function () {
+      //   let self = this
+      //   let iterator = {
+      //     next
+      //   }
+
+      //   function next() {
+      //     if (self) {
+      //       let done = self.next === null
+      //       self = self.next
+
+      //       return {
+      //         value: ,
+      //         done
+      //       }
+      //     } else {
+      //       return {
+      //         done: true
+      //       }
+      //     }
+      //   }
+      // }
+
+      Set.hi = () => {
+        console.log(`hello`)
+      }
+
+      // ADD
+      Set.prototype.add = function (val) {
+        if (this.has(val)) {
+          return false
+        }
+
+        this.set[val] = val
+        return true
+      }
+
+      // HAS
+      Set.prototype.has = function (val) {
+        return Reflect.has(this.set, val)
+        // return this.set.hasOwnProperty(val)
+      }
+
+      // REMOVE
+      Set.prototype.remove = function (val) {
+        if (!this.has(val)) {
+          return
+        }
+
+        delete this.set[val]
+        return false
+      }
+
+      // CLEAR
+      Set.prototype.clear = function () {
+        this.set = {}
+      }
+
+      // SIZE
+      Set.prototype.size = function () {
+        return Reflect.ownKeys(this.set).length
+      }
+
+      // VALUES
+      Set.prototype.values = function () {
+        return Reflect.ownKeys(this.set)
+      }
+
+      // 集合之间操作
+
+      // 并集
+      Set.prototype.union = function (otherSet) {
+        let unionSet = new Set()
+
+        let values = this.values()
+        for (let index = 0; index < values.length; index++) {
+          const element = values[index];
+          unionSet.add(element)
+        }
+
+        values = otherSet.values()
+        for (let index = 0; index < values.length; index++) {
+          const element = values[index];
+          unionSet.add(element)
+        }
+
+        return unionSet
+      }
+
+      // 交集
+      Set.prototype.intersection = function (otherSet) {
+        let intersectionSet = new Set()
+
+        let values = this.values()
+
+        let inter = values.filter(value => {
+          return otherSet.has(value)
+        })
+
+        for (let index = 0; index < inter.length; index++) {
+          const element = inter[index];
+          intersectionSet.add(element)
+        }
+
+        return intersectionSet
+      }
+
+      // 差集
+      Set.prototype.difference = function (otherSet) {
+        let differenceSet = new Set()
+
+        let values = this.values()
+
+        for (let index = 0; index < values.length; index++) {
+          const element = values[index];
+
+          if (!otherSet.has(element)) {
+            differenceSet.add(element)
+          }
+        }
+
+        return differenceSet
+      }
+
+      // 子集
+      Set.prototype.subset = function (otherSet) {
+        let values = this.values()
+
+        for (let index = 0; index < values.length; index++) {
+          const element = values[index];
+
+          if (!otherSet.has(element)) {
+            return false
+          }
+
+          return true
+        }
+      }
+    }
+
+
+    // let set = new Set()
+    // window.aSet = Set
+    // console.log(set.add('a'))
+    // console.log(set.add('b'))
+    // console.log(set.add('c'))
+    // console.log(set.add('c'))
+    // console.log(set.values);
+
+    let setA = new Set()
+    // setA.add(1)
+    // setA.add(3)
+    // setA.add(2)
+    setA.add(4)
+
+    let setB = new Set()
+    setB.add('a')
+    setB.add('c')
+    setB.add('b')
+    setB.add(4)
+
+    // let c = setA.union(setB)
+    let c = setA.subset(setB)
+    // let c = setA.difference(setB)
+    // let c = setA.intersection(setB)
+
+
+    console.log(setA)
+    console.log(setB)
+    console.log(c)
+  </script>
+</body>
+
+</html>
